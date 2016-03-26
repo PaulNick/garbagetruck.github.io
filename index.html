@@ -1,0 +1,202 @@
+﻿<html>
+<title>新北市垃圾車在哪兒?</title>
+<head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=big5">
+<meta http-equiv="refresh" content="60" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+	  var now_year="";
+	  var now_month="";
+	  var now_date="";
+
+	  function showlocation(value)
+	  {
+		  $("#garbagetruck tbody").remove();
+		  var empty="<tbody></tbody>";
+		  $(empty).appendTo("#garbagetruck");
+		  $(function() {
+		   var url = "http://json2jsonp.com/?url=http://data.ntpc.gov.tw/od/data/api/28AB4122-60E1-4065-98E5-ABCCB69AACA6?$format=json&$top=28901&callback=cbfunc";
+		   $.ajax({
+					type: 'GET',
+					url: url,
+					async: false,
+					contentType: "application/json",
+					dataType: 'jsonp',
+					success: function(json) {
+							  $.each( json, function( i, f ) {
+									  
+									  var tblRow1 = "";
+									  var now_time = now_year + '/' + (now_month<10 ? '0' : '') + now_month + '/' + (now_date<10 ? '0' : '') + now_date;
+									  if(f.time.substr(0,10)==now_time)
+									  {
+										tblRow1 ="<tr>" + 
+										"<td bgcolor=&quot;#FFD78C&quot;>" + f.car + "</td>" + 
+										"<td bgcolor=&quot;#FFD78C&quot;>" + f.time + "</td>" +
+										"<td bgcolor=&quot;#FFD78C&quot;>" + f.location + "</td>" +					  
+										"</tr>";
+									  }
+									  else
+									  {
+										tblRow1 ="<tr>" + 
+										"<td>" + f.car + "</td>" + 
+									    "<td>" + f.time + "</td>" +
+										"<td>" + f.location + "</td>" +					  
+										"</tr>";
+									  }
+									  if(f.location.substr(3,3)==value)
+									  {
+										$(tblRow1).appendTo("#garbagetruck tbody"); 									
+									  }
+							 });
+					},
+					error: function(e) {
+						console.log(e.message);
+					}
+				});
+		  });
+	  }
+	
+	function ShowTime(){
+	　var NowDate=new Date();
+	  var year = NowDate.getFullYear();
+	  var month = NowDate.getMonth()+1;
+	  var date = NowDate.getDate();
+	　var hours=NowDate.getHours();
+	  now_year=year;
+	  now_month=month;
+	  now_date=date;
+	　var minutes=NowDate.getMinutes();
+	　var seconds=NowDate.getSeconds();　
+	　document.getElementById('showbox').innerHTML = '現在時間:'+year+'年'+month+'月'+date+'日'+hours+'時'+minutes+'分'+seconds+'秒';
+	　setTimeout('ShowTime()',1000);
+	}
+</script>
+</head>
+<body onload="ShowTime()">
+<div class="wrapper">
+<div class="profile">
+  <div id="showbox"></div>
+  <br>
+  <table border="0">
+	  <tr>
+			<table id= "garbagetruck" border="2">
+				<thead>
+						<th>車牌號碼</th>
+						<th>回報時間</th>
+						<th>所在位置</th>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<br>
+	  </tr>
+	  <tr>
+	        <table border="0">
+			<tr>
+				<th>
+					<button type="button" value="八里區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">八里區</button>
+				</th>
+				<th>
+					<button type="button" value="三芝區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">三芝區</button>
+				</th>
+				<th>
+					<button type="button" value="三重區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">三重區</button>
+				</th>
+				<th>
+					<button type="button" value="三峽區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">三峽區</button>
+				</th>
+				<th>
+					<button type="button" value="土城區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">土城區</button>
+				</th>
+				<th>
+					<button type="button" value="中和區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">中和區</button>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button type="button" value="五股區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">五股區</button>
+				</th>
+				<th>
+					<button type="button" value="平溪區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">平溪區</button>
+				</th>
+				<th>
+					<button type="button" value="永和區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">永和區</button>
+				</th>
+				<th>
+					<button type="button" value="石門區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">石門區</button>
+				</th>
+				<th>
+					<button type="button" value="石碇區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">石碇區</button>
+				</th>
+				<th>
+					<button type="button" value="汐止區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">汐止區</button>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button type="button" value="坪林區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">坪林區</button>
+				</th>
+				<th>
+					<button type="button" value="林口區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">林口區</button>
+				</th>
+				<th>
+					<button type="button" value="板橋區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">板橋區</button>
+				</th>
+				<th>
+					<button type="button" value="金山區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">金山區</button>
+				</th>
+				<th>
+					<button type="button" value="泰山區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">泰山區</button>
+				</th>
+				<th>
+					<button type="button" value="烏來區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">烏來區</button>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button type="button" value="貢寮區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">貢寮區</button>
+				</th>
+				<th>
+					<button type="button" value="淡水區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">淡水區</button>
+				</th>
+				<th>
+					<button type="button" value="深坑區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">深坑區</button>
+				</th>
+				<th>
+					<button type="button" value="新店區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">新店區</button>
+				</th>
+				<th>
+					<button type="button" value="新莊區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">新莊區</button>
+				</th>
+				<th>
+					<button type="button" value="瑞芳區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">瑞芳區</button>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button type="button" value="萬里區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">萬里區</button>
+				</th>
+				<th>
+					<button type="button" value="樹林區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">樹林區</button>
+				</th>
+				<th>
+					<button type="button" value="雙溪區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">雙溪區</button>
+				</th>
+				<th>
+					<button type="button" value="蘆洲區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">蘆洲區</button>
+				</th>
+				<th>
+					<button type="button" value="鶯歌區" onclick="showlocation(this.value);" style="background-color:blue;color:white;border:5px #cccccc solid;">鶯歌區</button>
+				</th>
+			</tr>
+			</table>
+	  </tr>
+   </table>
+</div>
+</div>
+</body>
+</html>
+
