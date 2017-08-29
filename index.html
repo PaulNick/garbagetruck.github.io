@@ -17,6 +17,7 @@
 		  $("#garbagetruck tbody").remove();
 		  var empty="<tbody></tbody>";
 		  $(empty).appendTo("#garbagetruck");
+		  count =0;
 		  $(function() {
 		   var url = "http://json2jsonp.com/?url=http://data.ntpc.gov.tw/od/data/api/28AB4122-60E1-4065-98E5-ABCCB69AACA6?$format=json&$top=28901&callback=cbfunc";
 		   $.ajax({
@@ -27,7 +28,6 @@
 					dataType: 'jsonp',
 					success: function(json) {
 							  $.each( json, function( i, f ) {
-									  count =0;
 						                          if(f.location.substr(3,3)==value)
 									  {
 										count=count+1;
@@ -54,13 +54,13 @@
 									  {
 										$(tblRow1).appendTo("#garbagetruck tbody"); 									
 									  }
-						                          if(count >0)
+							 });
+						         		  if(count >0)
 									  {
 										document.getElementById("p1").style.display="none";
 									  }else{
 										document.getElementById("p1").style.display="block";
 									  }
-							 });
 					},
 					error: function(e) {
 						console.log(e.message);
