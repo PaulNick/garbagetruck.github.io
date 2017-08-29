@@ -11,7 +11,7 @@
 	  var now_year="";
 	  var now_month="";
 	  var now_date="";
-
+          var count =0;
 	  function showlocation(value)
 	  {
 		  $("#garbagetruck tbody").remove();
@@ -27,7 +27,11 @@
 					dataType: 'jsonp',
 					success: function(json) {
 							  $.each( json, function( i, f ) {
-									  
+									  count =0;
+						                          if(f.location.substr(3,3)==value)
+									  {
+										count=count+1;
+									  }
 									  var tblRow1 = "";
 									  var now_time = now_year + '/' + (now_month<10 ? '0' : '') + now_month + '/' + (now_date<10 ? '0' : '') + now_date;
 									  if(f.time.substr(0,10)==now_time)
@@ -49,6 +53,12 @@
 									  if(f.location.substr(3,3)==value)
 									  {
 										$(tblRow1).appendTo("#garbagetruck tbody"); 									
+									  }
+						                          if(count >0)
+									  {
+										document.getElementById("p1").style.display="none";
+									  }else{
+										document.getElementById("p1").style.display="block";
 									  }
 							 });
 					},
@@ -93,6 +103,9 @@
 			</table>
 			<br>
 	  </tr>
+	  <font size="4" color="#FF0000">
+		<p id="p1" style="display:none">你選的區域沒有垃圾車在街上跑</p>
+	  </font>
 	  <tr>
 	        <table border="0">
 			<tr>
